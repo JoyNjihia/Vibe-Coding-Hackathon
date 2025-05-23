@@ -1,1 +1,6 @@
 
+flask
+requests
+anthropic
+python-dotenv
+supabase
