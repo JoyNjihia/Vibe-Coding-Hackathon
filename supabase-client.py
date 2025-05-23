@@ -1,10 +1,20 @@
 
-import os
-from supabase import create_client, Client
-from dotenv import load_dotenv
+CREATE TABLE suppliers (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name TEXT NOT NULL
+);
 
-load_dotenv()
-url = os.getenv("SUPABASE_URL")
-key = os.getenv("SUPABASE_KEY")
+CREATE TABLE products (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name TEXT NOT NULL
+);
 
-supabase: Client = create_client(url, key)
+CREATE TABLE prices (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    product_id UUID REFERENCES products(id),
+    supplier_id UUID REFERENCES suppliers(id),
+    price DECIMAL NOT NULL,
+    date_reported TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    source_type TEXT,
+    raw_input TEXT
+);
